@@ -32,7 +32,7 @@ def calcularPrecio(tarifa,tiempoDeServicio):
     minutos = int(d2_ts-d1_ts) / 60
     
     if(minutos>=15 and minutos <=60):
-        if(d1.weekday()>=5):
+        if(d2.weekday()>=5):
             return tarifa.tarifaFinSemana
         else:
             return tarifa.tarifaSemana
@@ -179,7 +179,7 @@ class TestCalc(unittest.TestCase):
         d1 = datetime.datetime(2017, 1, 27,23,30)
         d2 = datetime.datetime(2017, 1, 28,0,30)
         tiempoServicio0 = tiempoDeServicio(d1,d2)
-        self.assertEqual(1,calcularPrecio(tarifa0,tiempoServicio0))  
+        self.assertEqual(2,calcularPrecio(tarifa0,tiempoServicio0))  
 
 if __name__== '__main__':
     unittest.main()
