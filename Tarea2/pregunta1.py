@@ -31,11 +31,6 @@ def calcularPrecio(tarifa,tiempoDeServicio):
     d2_ts = time.mktime(d2.timetuple())
     minutos = int(d2_ts-d1_ts) / 60
     
-    if(minutos>=15 and minutos <=60):
-        if(d2.weekday()>=5):
-            return tarifa.tarifaFinSemana
-        else:
-            return tarifa.tarifaSemana
     if (minutos<15):
         return 0
     if(ds.days>7):
@@ -53,6 +48,17 @@ def calcularPrecio(tarifa,tiempoDeServicio):
                     horas[z]=d2.hour-d1.hour
             else:
                 horas[z]=24-d1.hour
+                if(d1.minute!=0):
+                    valor1=60-d1.minute
+                else:
+                    valor1=0
+
+                valor3=d2.minute+valor1
+
+                if(valor3==60):
+                    horas[z]=horas[z]-1
+                elif(d1.minute>d2.minute):
+                    horas[z]=horas[z]-1
         elif(z==delta.days):
             if(d2.minute>0):
                 horas[z]=d2.hour+1
@@ -180,6 +186,24 @@ class TestCalc(unittest.TestCase):
         d2 = datetime.datetime(2017, 1, 28,0,30)
         tiempoServicio0 = tiempoDeServicio(d1,d2)
         self.assertEqual(2,calcularPrecio(tarifa0,tiempoServicio0))  
+    def test_Borde2(self):
+        tarifa0 = tarifa(1,2)
+        d1 = datetime.datetime(2017, 1, 27,23,30)
+        d2 = datetime.datetime(2017, 1, 29,0,30)
+        tiempoServicio0 = tiempoDeServicio(d1,d2)
+        self.assertEqual(50,calcularPrecio(tarifa0,tiempoServicio0))  
+    def test_Borde3(self):
+        tarifa0 = tarifa(1,2)
+        d1 = datetime.datetime(2017, 1, 27,23,20)
+        d2 = datetime.datetime(2017, 1, 29,0,30)
+        tiempoServicio0 = tiempoDeServicio(d1,d2)
+        self.assertEqual(51,calcularPrecio(tarifa0,tiempoServicio0))  
+    def test_Borde4(self):
+        tarifa0 = tarifa(1,2)
+        d1 = datetime.datetime(2017, 1, 27,23,40)                                 
+        d2 = datetime.datetime(2017, 1, 29,0,30)
+        tiempoServicio0 = tiempoDeServicio(d1,d2)
+        self.assertEqual(50,calcularPrecio(tarifa0,tiempoServicio0))  
 
 if __name__== '__main__':
     unittest.main()
