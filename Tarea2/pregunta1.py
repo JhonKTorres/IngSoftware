@@ -30,6 +30,12 @@ def calcularPrecio(tarifa,tiempoDeServicio):
     d1_ts = time.mktime(d1.timetuple())
     d2_ts = time.mktime(d2.timetuple())
     minutos = int(d2_ts-d1_ts) / 60
+    
+    if(minutos>=15 and minutos <=60):
+        if(d1.weekday()>=5):
+            return tarifa.tarifaFinSemana
+        else:
+            return tarifa.tarifaSemana
     if (minutos<15):
         return 0
     if(ds.days>7):
@@ -55,6 +61,7 @@ def calcularPrecio(tarifa,tiempoDeServicio):
         else:
             horas[z]=24
     costo=0
+
     for i in range(delta.days + 1):
         ahora = d1+ td(days=i)
         if(ahora.weekday()>=5):
@@ -166,7 +173,14 @@ class TestCalc(unittest.TestCase):
         d1 = datetime.datetime(2017, 1, 20,0,0)
         d2 = datetime.datetime(2017, 1, 21,0,0)
         tiempoServicio0 = tiempoDeServicio(d1,d2)
-        self.assertEqual(24,calcularPrecio(tarifa0,tiempoServicio0))    
+        self.assertEqual(24,calcularPrecio(tarifa0,tiempoServicio0))  
+    def test_Borde(self):
+        tarifa0 = tarifa(1,2)
+        d1 = datetime.datetime(2017, 1, 27,23,30)
+        d2 = datetime.datetime(2017, 1, 28,0,30)
+        tiempoServicio0 = tiempoDeServicio(d1,d2)
+        self.assertEqual(1,calcularPrecio(tarifa0,tiempoServicio0))  
+
 if __name__== '__main__':
     unittest.main()
     #main    
