@@ -148,7 +148,17 @@ class TestCalc(unittest.TestCase):
         tarifa=[1,2]
         d1 = datetime.datetime(2017, 1, 16,20,0)
         d2 = datetime.datetime(2017, 1, 23,20,0)
-        self.assertEqual(216,calcularPrecio(tarifa,[d1,d2]))       
+        self.assertEqual(216,calcularPrecio(tarifa,[d1,d2]))
+    def test_TerminaFinDeSemanaJusto(self):
+        tarifa=[1,2]
+        d1 = datetime.datetime(2017, 1, 22,0,0)
+        d2 = datetime.datetime(2017, 1, 23,0,0)
+        self.assertEqual(48,calcularPrecio(tarifa,[d1,d2]))          
+    def test_TerminaEntreDeSemanaJusto(self):
+        tarifa=[1,2]
+        d1 = datetime.datetime(2017, 1, 20,0,0)
+        d2 = datetime.datetime(2017, 1, 21,0,0)
+        self.assertEqual(24,calcularPrecio(tarifa,[d1,d2]))    
 if __name__== '__main__':
     unittest.main()
     #main    
