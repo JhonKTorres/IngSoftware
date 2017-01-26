@@ -13,18 +13,8 @@ import time
 
 import unittest
 
-    
 
 
-#datetime.datetime.today()
-#datetime.datetime(2012, 3, 23, 23, 0, 0, 0)
-#datetime.datetime.today().weekday()
-
-#tiempoDeTrabajo=[date,date];
-#tarifa=[10.5,12.5]
-#tarifa=
-#calcularPrecio(tarifa,tiempoDeServico):
-#    print("algo")
 def calcularPrecio(tarifa,tiempoDeServicio):
     
     if(tarifa.tarifaFinSemana<0 or tarifa.tarifaSemana<0):
@@ -34,7 +24,6 @@ def calcularPrecio(tarifa,tiempoDeServicio):
     d2 = tiempoDeServicio.tiempoFinalDeServicio
     d3 = tiempoDeServicio.tiempoInicioDeServicio.date()
     d4 = tiempoDeServicio.tiempoFinalDeServicio.date()
-    print(d1)
     ds = d2-d1
     delta = d4-d3
     #convertimos el tiempo a unix para obtener los minutos
@@ -83,7 +72,7 @@ class TestCalc(unittest.TestCase):
         self.assertEqual(0,calcularPrecio(tarifa0,tiempoServicio0))
         
     def test_Menor15Minutos(self):
-        tarifa0 = tarifa(-10.5,12.5)
+        tarifa0 = tarifa(10.5,12.5)
         d1 = datetime.datetime(2017, 1, 23,3,0)
         d2 = datetime.datetime(2017, 1, 23,3,14)
         tiempoServicio0 = tiempoDeServicio(d1,d2)
