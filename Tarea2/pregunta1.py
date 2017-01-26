@@ -204,6 +204,12 @@ class TestCalc(unittest.TestCase):
         d2 = datetime.datetime(2017, 1, 29,0,30)
         tiempoServicio0 = tiempoDeServicio(d1,d2)
         self.assertEqual(50,calcularPrecio(tarifa0,tiempoServicio0))  
+    def test_normal(self):
+        tarifa0 = tarifa(1,2)
+        d1 = datetime.datetime(2017, 1, 27,23,52)                                 
+        d2 = datetime.datetime(2017, 1, 28,1,2)
+        tiempoServicio0 = tiempoDeServicio(d1,d2)
+        self.assertEqual(4,calcularPrecio(tarifa0,tiempoServicio0))  
 
 if __name__== '__main__':
     unittest.main()
